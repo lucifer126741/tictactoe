@@ -1,0 +1,33 @@
+.flex {
+  display: flex;
+  &.col {
+    flex-direction: column;
+  }
+  &.center {
+    justify-content: center;
+  }
+  &.alignCenter {
+    align-items: center;
+  }
+  &.rowgap20 {
+    row-gap: 20px;
+  }
+  &.colgap20 {
+    column-gap: 20px;
+  }
+}
+.padding-top-bottom {
+  padding: 20px 0px;
+}
+.box {
+  border: 1px solid black;
+}
+.w100 {
+  width: 100%;
+}
+.w50 {
+  width: 50%;
+}
+.padding50 {
+  padding: 50px;
+}
