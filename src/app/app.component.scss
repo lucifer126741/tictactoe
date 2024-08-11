@@ -1,6 +1,6 @@
 .flex {
   display: flex;
-  &.col {
+  &.cols {
     flex-direction: column;
   }
   &.center {
@@ -9,8 +9,8 @@
   &.alignCenter {
     align-items: center;
   }
-  &.rowgap20 {
-    row-gap: 20px;
+  &.rowgap85 {
+    row-gap: 85px;
   }
   &.colgap20 {
     column-gap: 20px;
@@ -28,6 +28,24 @@
 .w50 {
   width: 50%;
 }
-.padding50 {
-  padding: 50px;
+.padding25 {
+  padding: 25px;
+}
+.h50p {
+  height: 50%;
+}
+.h18em {
+  height: 18em;
+}
+.h1em {
+  height: 1em;
+}
+.h3em {
+  height: 3em;
+}
+.h4em {
+  height: 4em;
+}
+.borderRight {
+  border-right: 1px solid black;
 }

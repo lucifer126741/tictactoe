@@ -21,12 +21,15 @@ export class AppComponent {
   ];
 
   fillBox(i: number, j: number) {
-    if (!this.isGameOver) {
-      this.box[i][j] = this.box[i][j] == '' && this.isPlayerA ? 'X' : 'O';
+    if (!this.isGameOver && this.box[i][j] == '') {
+      this.box[i][j] = this.isPlayerA ? 'X' : 'O';
       if (this.checkWinner(i, j) == 'won') {
         this.isGameOver = true;
         this.winnerDescription = `Player ${this.isPlayerA ? 'X' : 'O'} won`;
-      } else if (this.checkWinner(i, j) == 'tie') this.isGameOver = true;
+      } else if (this.checkWinner(i, j) == 'tie') {
+        this.isGameOver = true;
+        this.winnerDescription = 'Tie';
+      }
       this.isPlayerA = !this.isPlayerA;
     }
   }

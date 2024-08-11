@@ -1,15 +1,19 @@
-<div class="flex center w100 h100">
-  <div class="flex col center w50 rowgap20">
-    <div class="flex center w100">
+<!--TODO: Add Reset button-->
+<div class="flex center w100 h50p">
+  <div class="flex cols center w50 rowgap85 h18em">
+    <div class="flex center w100 h1em">
       <h1>Tic-tac-toe</h1>
     </div>
-    <div class="flex col alignCenter box padding-top-bottom w100" *ngIf="isGameOver">
-      <h2>Game over</h2>
-      <h3>{{winnerDescription}}</h3>
+    <div class="h3em">
+      <div class="flex cols alignCenter box padding-top-bottom w100" *ngIf="isGameOver">
+        <h2>Game over</h2>
+        <h3>{{winnerDescription}}</h3>
+      </div>
     </div>
-    <div>
-      <div class="flex center w100" *ngFor="let row of box;let i=index">
-        <div class=" flex center box w100 padding50" *ngFor="let char of box[i];let j=index" (click)="fillBox(i,j)">
+    <div class="h4em">
+      <div class="flex center w100 box" *ngFor="let row of box;let i=index">
+        <div class="flex center alignCenter w100 borderRight" *ngFor="let char of box[i];let j=index"
+          (click)="fillBox(i,j)">
           {{box[i][j]}}
         </div>
       </div>
