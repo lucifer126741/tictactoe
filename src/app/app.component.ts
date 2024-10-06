@@ -1,42 +1,67 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { RouterOutlet } from '@angular/router';
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, NgIf],
+  imports: [RouterOutlet, NgFor, NgIf, CommonModule, MatButtonModule, MatDialogModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'tictactoe';
-  isPlayerA: boolean = true;
-  isGameOver: boolean = false;
-  winnerDescription: string = '';
+  isPlayerA = true;
+  isGameOver = false;
+  winnerDescription = '';
   box: string[][] = [
     ['', '', ''],
     ['', '', ''],
     ['', '', ''],
   ];
-
-  fillBox(i: number, j: number) {
+  private readonly dialog = inject(MatDialog);
+  showDialog() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      height: '200px',
+      width: '500px',
+      data: this.winnerDescription,
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (res: any) => {
+        this.resetGame();
+      },
+      error: (err: any) => {},
+    });
+  }
+  fillBox(i: number, j: number): void {
     if (!this.isGameOver && this.box[i][j] == '') {
       this.box[i][j] = this.isPlayerA ? 'X' : 'O';
       if (this.checkWinner(i, j) == 'won') {
         this.isGameOver = true;
         this.winnerDescription = `Player ${this.isPlayerA ? 'X' : 'O'} won`;
+        this.showDialog();
       } else if (this.checkWinner(i, j) == 'tie') {
         this.isGameOver = true;
         this.winnerDescription = 'Tie';
+        this.showDialog();
       }
+
       this.isPlayerA = !this.isPlayerA;
     }
   }
   checkWinner(row: number, col: number): string {
     const playerChar: string = this.isPlayerA ? 'X' : 'O';
-    let rowChecker: boolean = true,
-      columnChecker: boolean = true;
+    let rowChecker = true,
+      columnChecker = true;
     //rowChecker
     for (let i = 0; i < 3; i++) {
       if (playerChar != this.box[row][i]) {
@@ -52,10 +77,10 @@ export class AppComponent {
       }
     }
     //main diag
-    let diag1Win =
+    const diag1Win =
       row === col && this.box[0][0] === playerChar && this.box[1][1] === playerChar && this.box[2][2] === playerChar;
     //anti-diag
-    let diag2Win =
+    const diag2Win =
       row + col === 2 &&
       this.box[0][2] === playerChar &&
       this.box[1][1] === playerChar &&
@@ -74,5 +99,27 @@ export class AppComponent {
     }
 
     return isTie ? 'tie' : 'ongoing';
+  }
+  resetGame() {
+    this.box = this.box.map((row: string[]) => {
+      return ['', '', ''];
+    });
+    this.isGameOver = false;
+    this.isPlayerA = true;
+    this.winnerDescription = '';
+  }
+}
+
+@Component({
+  standalone: true,
+  imports: [MatButtonModule, MatDialogActions, MatDialogContent],
+  templateUrl: './dialog.html',
+  styleUrl: './dialog.scss',
+})
+export class DialogComponent {
+  readonly dialogRef = inject(MatDialogRef<DialogComponent>);
+  readonly data = inject(MAT_DIALOG_DATA);
+  closeDialog() {
+    this.dialogRef.close();
   }
 }
