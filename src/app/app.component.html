@@ -1,11 +1,11 @@
 <div class="flex center w100">
   <div class="flex cols center w75 rowgap85">
-    <div class="flex center w100 h10p alignCenter">
-      <h1>Tic-tac-toe</h1>
+    <div class="flex center w100 h10p alignCenter txtcolor margintp10">
+      <h1 class="box alignCenter padding10"><strong>Tic-tac-toe</strong></h1>
     </div>
     <div>
       <div class="flex center w100 box h5em" *ngFor="let row of box;let i=index">
-        <div class="flex center alignCenter w100 borderRight font5em" *ngFor="let char of box[i];let j=index"
+        <div class="flex center alignCenter w100 borderRight font5em txtcolor" *ngFor="let char of box[i];let j=index"
           (click)="fillBox(i,j)">
           {{box[i][j]}}
         </div>

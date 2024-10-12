@@ -1,6 +1,6 @@
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -111,10 +111,12 @@ export class AppComponent {
 }
 
 @Component({
+  selector: 'app-dialog',
   standalone: true,
   imports: [MatButtonModule, MatDialogActions, MatDialogContent],
   templateUrl: './dialog.html',
   styleUrl: './dialog.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class DialogComponent {
   readonly dialogRef = inject(MatDialogRef<DialogComponent>);
